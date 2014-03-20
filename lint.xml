@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lint>
+    <issue id="ContentDescription" severity="ignore">
+        <ignore path="res/layout/login.xml" />
+    </issue>
+    <issue id="HandlerLeak" severity="ignore">
+        <ignore path="src/com/example/ce/Poject_Tab2.java" />
+    </issue>
+    <issue id="HardcodedText" severity="ignore">
+        <ignore path="res/layout/login.xml" />
+    </issue>
+    <issue id="UselessParent" severity="ignore" />
+</lint>

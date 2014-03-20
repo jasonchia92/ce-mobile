@@ -1,0 +1,28 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+     <item
+        android:id="@+id/action_menu"
+        android:showAsAction="ifRoom"
+        android:icon="@drawable/menu"
+        android:title="@string/action_settings">
+        <menu>
+            <item
+                android:id="@+id/action_camera"
+                android:onClick="onClick_Camera"
+                android:title="@string/msp_camera"/>
+            <item
+                android:id="@+id/action_upload"
+                android:onClick="onClick_Upload"
+                android:title="@string/msp_upload"/>
+            <item
+                android:id="@+id/action_remove"
+                android:onClick="onClick_Remove"
+                android:title="@string/msp_remove"/>
+            <item
+                android:id="@+id/action_log_out"
+                android:onClick="onClick_Logout"
+                android:title="@string/msp_logout"/>
+        </menu>
+    </item>
+
+</menu>
