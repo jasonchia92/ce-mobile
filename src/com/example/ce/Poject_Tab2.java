@@ -96,14 +96,6 @@ public class Poject_Tab2 extends Fragment {
 						status = new String[jsonArray.length()];
 						for (int i = 0; i < jsonArray.length(); i++) {
 							object = jsonArray.getJSONObject(i);
-							Log.d("PROJECT", object.getString("PROJECT_ID"));
-							Log.d("NAME", object.getString("NAME"));
-							Log.d("ADDRESS", object.getString("ADDRESS"));
-							Log.d("STATUS", object.getString("STATUS"));
-							// id = object.getString("PROJECT_ID");
-							// name = object.getString("NAME");
-							// address = object.getString("ADDRESS");
-							// status = object.getString("STATUS");
 							id1[i] = object.getString("PROJECT_ID");
 							name[i] = object.getString("NAME");
 							address[i] = object.getString("ADDRESS");
@@ -152,6 +144,7 @@ public class Poject_Tab2 extends Fragment {
 				bundle.putString("poject", name[position]);
 				bundle.putString("add", address[position]);
 				bundle.putString("id", id1[position]);
+				bundle.putString("status", "constructing");
 				intent.putExtras(bundle);
 				startActivity(intent);
 			}

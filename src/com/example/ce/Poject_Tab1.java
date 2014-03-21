@@ -21,6 +21,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class Poject_Tab1 extends Fragment {
@@ -51,10 +52,9 @@ public class Poject_Tab1 extends Fragment {
 								"連線錯誤 請確認您的網路");
 						break;
 					case 1:
-
 						SimpleAdapter adapter = new SimpleAdapter(getActivity()
 								.getBaseContext(), levelList, R.layout.newwork,
-								from, to);
+								from, to);	
 						adapter.notifyDataSetChanged();
 						listView.setAdapter(adapter);
 						break;
@@ -81,7 +81,6 @@ public class Poject_Tab1 extends Fragment {
 						JSONObject jsonResponse;
 						jsonResponse = new JSONObject(Response);
 						JSONArray jsonArray = jsonResponse.getJSONArray("data");
-
 						levelList.clear();
 						id1 = new String[jsonArray.length()];
 						name = new String[jsonArray.length()];
@@ -89,14 +88,6 @@ public class Poject_Tab1 extends Fragment {
 						status = new String[jsonArray.length()];
 						for (int i = 0; i < jsonArray.length(); i++) {
 							object = jsonArray.getJSONObject(i);
-							Log.d("PROJECT", object.getString("PROJECT_ID"));
-							Log.d("NAME", object.getString("NAME"));
-							Log.d("ADDRESS", object.getString("ADDRESS"));
-							Log.d("STATUS", object.getString("STATUS"));
-							// id = object.getString("PROJECT_ID");
-							// name = object.getString("NAME");
-							// address = object.getString("ADDRESS");
-							// status = object.getString("STATUS");
 							id1[i] = object.getString("PROJECT_ID");
 							name[i] = object.getString("NAME");
 							address[i] = object.getString("ADDRESS");
@@ -108,7 +99,6 @@ public class Poject_Tab1 extends Fragment {
 							map.put("STATUS", status[i]);
 
 							levelList.add(map);
-
 							msg.what = 1;
 						}
 						handler.sendMessage(msg);
@@ -127,7 +117,6 @@ public class Poject_Tab1 extends Fragment {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-
 				// do things with the clicked item
 				Toast.makeText(getActivity(), name[position],
 						Toast.LENGTH_SHORT).show();
@@ -137,6 +126,7 @@ public class Poject_Tab1 extends Fragment {
 				bundle.putString("poject", name[position]);
 				bundle.putString("add", address[position]);
 				bundle.putString("id", id1[position]);
+				bundle.putString("status", "ready");
 				intent.putExtras(bundle);
 				startActivity(intent);
 			}

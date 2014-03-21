@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -37,20 +38,26 @@ public class CE_Poject_about extends ActivityGroup {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
 		setContentView(R.layout.activity_ce_poject_about);
-
+		
 		push();
-		// tab();
 		main();
-		// get();
-
 	}
 
 	public void main() {
 		Intent intent = this.getIntent();
 		Bundle bundle = intent.getExtras();
+		ImageView img= (ImageView) findViewById(R.id.cover);
 		poject.setText(bundle.getString("poject"));
+		if(bundle.getString("status").contains("ready")){
+			img.setImageResource(R.drawable.project_ready);
+		}
+		else if(bundle.getString("status").contains("constructing")){
+			img.setImageResource(R.drawable.project_constructing);
+		}
+		else{
+			img.setImageResource(R.drawable.project_done);
+		}
 		add.setText(bundle.getString("add"));
 
 	}
@@ -82,8 +89,7 @@ public class CE_Poject_about extends ActivityGroup {
 
 		mTabHost.addTab(mTabHost.newTabSpec(0 + "").setIndicator("關於")
 				.setContent(intent1));
-
-		// / 測試中 傳值到日報中
+		// 測試中 傳值到日報中
 		Intent daily = new Intent(this, daily_list.class);
 		Intent intent2 = this.getIntent();
 		Bundle test1 = intent2.getExtras();
@@ -98,7 +104,7 @@ public class CE_Poject_about extends ActivityGroup {
 				.setIndicator("日報")
 				.setContent(
 						new Intent(daily)
-								.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)));
+						.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)));
 		// 傳值到進度
 		Intent schedule = new Intent(this, schedule_list.class);
 		Intent intent3 = this.getIntent();
@@ -107,7 +113,6 @@ public class CE_Poject_about extends ActivityGroup {
 
 		Bundle id = new Bundle();
 		id.putString("id", Poject_id);
-
 		schedule.putExtras(id);
 
 		mTabHost.addTab(mTabHost
@@ -115,9 +120,8 @@ public class CE_Poject_about extends ActivityGroup {
 				.setIndicator("進度")
 				.setContent(
 						new Intent(schedule)
-								.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)));
+						.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)));
 		mTabHost.setCurrentTab(0);
-
 	}
 
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -137,31 +141,30 @@ public class CE_Poject_about extends ActivityGroup {
 		case R.id.logout:
 			AlertDialog.Builder builder = new Builder(this);
 			builder.setMessage("確定登出")
-					.setTitle("提醒")
-					.setPositiveButton("取消",
-							new DialogInterface.OnClickListener() {
+			.setTitle("提醒")
+			.setPositiveButton("取消",
+					new DialogInterface.OnClickListener() {
 
-								@Override
-								public void onClick(DialogInterface dialog,
-										int which) {
-									// TODO Auto-generated method stub
-									dialog.dismiss();
+				@Override
+				public void onClick(DialogInterface dialog,
+						int which) {
+					// TODO Auto-generated method stub
+					dialog.dismiss();
 
-								}
-							})
-					.setNegativeButton("確認",
-							new DialogInterface.OnClickListener() {
+				}
+			})
+			.setNegativeButton("確認",
+					new DialogInterface.OnClickListener() {
 
-								@Override
-								public void onClick(DialogInterface dialog,
-										int which) {
-									// TODO Auto-generated method stub
-									dialog.dismiss();
+				@Override
+				public void onClick(DialogInterface dialog,
+						int which) {
+					// TODO Auto-generated method stub
+					dialog.dismiss();
 
-								}
-							}).show();
+				}
+			}).show();
 			break;
-
 		default:
 			break;
 		}

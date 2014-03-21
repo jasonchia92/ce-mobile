@@ -3,21 +3,16 @@ package com.example.ce;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONObject;
-
-import com.example.ce.pic.PicTabhost_Activity;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,15 +50,12 @@ public class Poject_Tab3 extends Fragment {
 								Toast.LENGTH_SHORT).show();
 						break;
 					case 1:
-
 						SimpleAdapter adapter = new SimpleAdapter(getActivity()
 								.getBaseContext(), levelList,
 								R.layout.newwork2, from, to);
 						adapter.notifyDataSetChanged();
 						listView.setAdapter(adapter);
-
 						break;
-
 					default:
 						break;
 					}
@@ -94,14 +86,6 @@ public class Poject_Tab3 extends Fragment {
 						status = new String[jsonArray.length()];
 						for (int i = 0; i < jsonArray.length(); i++) {
 							object = jsonArray.getJSONObject(i);
-							Log.d("PROJECT", object.getString("PROJECT_ID"));
-							Log.d("NAME", object.getString("NAME"));
-							Log.d("ADDRESS", object.getString("ADDRESS"));
-							Log.d("STATUS", object.getString("STATUS"));
-							// id = object.getString("PROJECT_ID");
-							// name = object.getString("NAME");
-							// address = object.getString("ADDRESS");
-							// status = object.getString("STATUS");
 							id1[i] = object.getString("PROJECT_ID");
 							name[i] = object.getString("NAME");
 							address[i] = object.getString("ADDRESS");
@@ -113,7 +97,6 @@ public class Poject_Tab3 extends Fragment {
 							map.put("STATUS", status[i]);
 
 							levelList.add(map);
-
 							msg.what = 1;
 						}
 						handler.sendMessage(msg);
@@ -125,15 +108,7 @@ public class Poject_Tab3 extends Fragment {
 			}
 
 		};
-
-		// 設定newwork layout
-		// SimpleAdapter adapter = new SimpleAdapter(getActivity()
-		// .getBaseContext(), levelList, R.layout.newwork, from, to);
 		thread.start();
-		// Handler
-
-		// adapter.notifyDataSetChanged();
-		// listView.setAdapter(adapter);
 
 		// 點擊事件
 		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -150,6 +125,7 @@ public class Poject_Tab3 extends Fragment {
 				bundle.putString("poject", name[position]);
 				bundle.putString("add", address[position]);
 				bundle.putString("id", id1[position]);
+				bundle.putString("status", "finish");
 				intent.putExtras(bundle);
 				startActivity(intent);
 			}

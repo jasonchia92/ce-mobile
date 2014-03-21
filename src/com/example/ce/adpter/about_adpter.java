@@ -20,8 +20,6 @@ public class about_adpter extends BaseAdapter {
 		this.context = context;
 		this.list2 = list2;
 		inflater = LayoutInflater.from(context);
-		// inflater = (LayoutInflater)
-		// this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);//þý°î«²þý”XMLï¿½ï‚¥iew
 	}
 
 	@Override
