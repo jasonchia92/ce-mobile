@@ -1,38 +1,24 @@
 package com.example.ce;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
-import org.apache.http.NameValuePair;
-import org.apache.http.message.BasicNameValuePair;
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.ActionBar.Tab;
 import android.app.ActionBar.TabListener;
 import android.app.AlertDialog.Builder;
 import android.app.FragmentTransaction;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
 import com.example.ce.adpter.daily_list;
@@ -51,6 +37,7 @@ public class Poject_Tab extends FragmentActivity implements TabListener,
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_ce);
+
 		findViewById();
 		initView();
 	}
@@ -62,7 +49,9 @@ public class Poject_Tab extends FragmentActivity implements TabListener,
 	private void initView() {
 
 		final ActionBar mActionBar = getActionBar();
+
 		mActionBar.setDisplayHomeAsUpEnabled(false);
+
 		mActionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
 		mAdapter = new TabFragmentPagerAdapter(getSupportFragmentManager());
@@ -88,6 +77,7 @@ public class Poject_Tab extends FragmentActivity implements TabListener,
 
 		mActionBar.addTab(mActionBar.newTab().setText(R.string.Construction)
 				.setTabListener(this));
+
 		mActionBar.addTab(mActionBar.newTab().setText(R.string.Preparation)
 				.setTabListener(this));
 		mActionBar.addTab(mActionBar.newTab().setText(R.string.Closed)
@@ -95,7 +85,6 @@ public class Poject_Tab extends FragmentActivity implements TabListener,
 		mActionBar.setSelectedNavigationItem(0);
 
 	}
-	
 
 	public static class TabFragmentPagerAdapter extends FragmentPagerAdapter {
 
@@ -150,9 +139,9 @@ public class Poject_Tab extends FragmentActivity implements TabListener,
 			break;
 		case R.id.logout:
 			AlertDialog.Builder builder = new Builder(this);
-			builder.setMessage("½T©wµn¥X")
-					.setTitle("´£¿ô")
-					.setPositiveButton("¨ú®ø",
+			builder.setMessage("Â½TÂ©wÂµnÂ¥X")
+					.setTitle("Â´Â£Â¿Ã´")
+					.setPositiveButton("Â¨ÃºÂ®Ã¸",
 							new DialogInterface.OnClickListener() {
 
 								@Override
@@ -163,7 +152,7 @@ public class Poject_Tab extends FragmentActivity implements TabListener,
 
 								}
 							})
-					.setNegativeButton("½T»{",
+					.setNegativeButton("Â½TÂ»{",
 							new DialogInterface.OnClickListener() {
 
 								@Override
@@ -224,7 +213,7 @@ public class Poject_Tab extends FragmentActivity implements TabListener,
 
 	}
 
-	// Âêªð¦^Áä
+	// Ã‚ÃªÂªÃ°Â¦^ÃÃ¤
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
@@ -236,7 +225,7 @@ public class Poject_Tab extends FragmentActivity implements TabListener,
 
 	public void exit() {
 		if ((System.currentTimeMillis() - exitTime) > 2000) {
-			Toast.makeText(getApplicationContext(), "¦A«ö¤@¦¸°h¥Xµ{§Ç",
+			Toast.makeText(getApplicationContext(), "Â¦AÂ«Ã¶Â¤@Â¦Â¸Â°hÂ¥XÂµ{Â§Ã‡",
 					Toast.LENGTH_SHORT).show();
 			exitTime = System.currentTimeMillis();
 		} else {
@@ -244,7 +233,5 @@ public class Poject_Tab extends FragmentActivity implements TabListener,
 			System.exit(0);
 		}
 	}
-	
-	
 
 }

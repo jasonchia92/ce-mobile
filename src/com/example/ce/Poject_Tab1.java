@@ -2,17 +2,12 @@ package com.example.ce;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-
-import org.apache.http.NameValuePair;
-import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
-import android.content.Context;
+import com.example.ce.adpter.SP_data;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,102 +16,72 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
-import android.widget.TextView;
 import android.widget.Toast;
 
 public class Poject_Tab1 extends Fragment {
 	private ListView listView;
-	String url = "http://apps.csie.stu.edu.tw:3980/api/project/getProjectList/status/0";
+	SP_data session;
 	ArrayList<HashMap<String, String>> levelList = new ArrayList<HashMap<String, String>>();
-	String Response;
 	String name[], address[], status[], id1[];
 	JSONObject object;
-	Context context;
-	String[] from = { "PROJECT_ID", "NAME", "ADDRESS", "STATUS" };
-	int[] to = { R.id.textView1, R.id.textView2, R.id.textView3, };
-	AlertDialogManager alert = new AlertDialogManager();
-	Message msg = new Message();
+	String[] from = { "PROJECT_ID", "NAME", "ADDRESS" };
+	int[] to = { R.id.id, R.id.name, R.id.address, };
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View v = inflater.inflate(R.layout.f1, container, false);
-		listView = (ListView) v.findViewById(R.id.listView1);
-		Thread thread = new Thread() {
-			Handler handler = new Handler() {
-				@Override
-				public void handleMessage(Message msg) {
-					switch (msg.what) {
-					case 0:
-						alert.showAlertDialog(getActivity(), "Warring",
-								"連線錯誤 請確認您的網路");
-						break;
-					case 1:
-						SimpleAdapter adapter = new SimpleAdapter(getActivity()
-								.getBaseContext(), levelList, R.layout.newwork,
-								from, to);	
-						adapter.notifyDataSetChanged();
-						listView.setAdapter(adapter);
-						break;
-
-					default:
-						break;
-					}
-
+		View v = inflater.inflate(R.layout.f2, container, false);
+		session = new SP_data(this.getActivity().getApplicationContext()); 
+		listView = (ListView) v.findViewById(R.id.listView2);
+		
+		JSONArray obj;
+		HashMap<String, String> user = session.getUserDetails();
+		String data2 = user.get(SP_data.KEY_DATA);
+		levelList.clear();
+		try {
+			obj = new JSONArray(data2);
+			
+			id1 = new String[obj.length()];
+			name = new String[obj.length()];
+			address = new String[obj.length()];
+			status = new String[obj.length()];
+			
+			for (int i = 0; i < obj.length(); i++) {
+				object =  obj.getJSONObject(i);
+				status[i] = object.getString("STATUS").toString();
+				if(status[i].contains("0")){
+					id1[i] = object.getString("PROJECT_ID").toString();
+					name[i] = object.getString("NAME").toString();
+					address[i] = object.getString("ADDRESS").toString();
+					
+					HashMap<String, String> map = new HashMap<String, String>();
+					map.put("PROJECT_ID", id1[i]);
+					map.put("NAME", name[i]);
+					map.put("ADDRESS", address[i]);
+					levelList.add(map);
 				}
-
-			};
-
-			public void run() {
-				try {
-					List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-					nameValuePairs.add(new BasicNameValuePair("email", ""));
-					nameValuePairs.add(new BasicNameValuePair("email", ""));
-					Http_Post response = new Http_Post();
-					Response = response.Response(url, nameValuePairs);
-					// 判斷是否有接收到JSON
-					if (Response == null) {
-						msg.what = 0;
-					} else {
-						JSONObject jsonResponse;
-						jsonResponse = new JSONObject(Response);
-						JSONArray jsonArray = jsonResponse.getJSONArray("data");
-						levelList.clear();
-						id1 = new String[jsonArray.length()];
-						name = new String[jsonArray.length()];
-						address = new String[jsonArray.length()];
-						status = new String[jsonArray.length()];
-						for (int i = 0; i < jsonArray.length(); i++) {
-							object = jsonArray.getJSONObject(i);
-							id1[i] = object.getString("PROJECT_ID");
-							name[i] = object.getString("NAME");
-							address[i] = object.getString("ADDRESS");
-							status[i] = object.getString("STATUS");
-							HashMap<String, String> map = new HashMap<String, String>();
-							map.put("PROJECT_ID", id1[i]);
-							map.put("NAME", name[i]);
-							map.put("ADDRESS", address[i]);
-							map.put("STATUS", status[i]);
-
-							levelList.add(map);
-							msg.what = 1;
-						}
-						handler.sendMessage(msg);
-
-					}
-				} catch (Exception e) {
-					e.printStackTrace();
+				else{
+					
 				}
 			}
+			SimpleAdapter adapter = new SimpleAdapter(getActivity()
+					.getBaseContext(), levelList, R.layout.newwork,
+					from, to);
+			
+			adapter.notifyDataSetChanged();
+			listView.setAdapter(adapter);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 
-		};
-
-		thread.start();
-
+		// 點擊事件
 		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
+
 				// do things with the clicked item
 				Toast.makeText(getActivity(), name[position],
 						Toast.LENGTH_SHORT).show();
@@ -134,5 +99,4 @@ public class Poject_Tab1 extends Fragment {
 		});
 		return v;
 	}
-
 }

@@ -11,11 +11,14 @@ import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.protocol.HTTP;
 
+import android.widget.Toast;
+
+import com.example.ce.index.Home;
+
 public class Http_Post {
 	String response = null;
 
 	public String Response(String url, List<NameValuePair> nameValuePairs) {
-		System.out.println("URL:" + url);
 		HttpClient client = new DefaultHttpClient();
 		HttpPost post = new HttpPost(url);
 		try {
@@ -23,9 +26,8 @@ public class Http_Post {
 			ResponseHandler<String> handler = new BasicResponseHandler();
 			response = new String(client.execute(post, handler).getBytes(),
 					HTTP.UTF_8);
-			System.out.println(response);
 		} catch (Exception e) {
-			e.printStackTrace();
+			response = null;
 		}
 		return response;
 	}
